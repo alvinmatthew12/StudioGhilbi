@@ -10,6 +10,7 @@
 		4CC004A31040C8EA0CC83DFC /* libPods-StudioGhilbiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BA45AF06EDB19E0BB6268D /* libPods-StudioGhilbiTests.a */; };
 		C0AE594EDF32CAB3B7B1D6F8 /* Pods_StudioGhilbi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 329B04DBBFB03657BD3EE0E1 /* Pods_StudioGhilbi.framework */; };
 		E127C92B26162D0A00C1FE36 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E127C92A26162D0A00C1FE36 /* MovieModel.swift */; };
+		E127C93926163D3000C1FE36 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E127C93826163D3000C1FE36 /* MovieDetailViewController.swift */; };
 		E154C650261622E60018DB1E /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154C64F261622E60018DB1E /* Movie.swift */; };
 		E154C6562616266D0018DB1E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154C6552616266D0018DB1E /* Color.swift */; };
 		E154C65F2616293C0018DB1E /* StudioGhilbiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154C65E2616293C0018DB1E /* StudioGhilbiTests.swift */; };
@@ -40,6 +41,7 @@
 		AB533F00904F7DB046D6F8AE /* Pods-StudioGhilbiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudioGhilbiTests.release.xcconfig"; path = "Target Support Files/Pods-StudioGhilbiTests/Pods-StudioGhilbiTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2914C49354FC00C694B1F65 /* Pods-StudioGhilbi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudioGhilbi.release.xcconfig"; path = "Target Support Files/Pods-StudioGhilbi/Pods-StudioGhilbi.release.xcconfig"; sourceTree = "<group>"; };
 		E127C92A26162D0A00C1FE36 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
+		E127C93826163D3000C1FE36 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		E154C64F261622E60018DB1E /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		E154C6552616266D0018DB1E /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		E154C65C2616293C0018DB1E /* StudioGhilbiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudioGhilbiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				E1E4859B2614C98500361A85 /* MoviesViewController.swift */,
+				E127C93826163D3000C1FE36 /* MovieDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				E154C650261622E60018DB1E /* Movie.swift in Sources */,
 				E1E4859C2614C98500361A85 /* MoviesViewController.swift in Sources */,
 				E1E485982614C98500361A85 /* AppDelegate.swift in Sources */,
+				E127C93926163D3000C1FE36 /* MovieDetailViewController.swift in Sources */,
 				E1D071D826161C6400D99780 /* MovieTableViewCell.swift in Sources */,
 				E1E4859A2614C98500361A85 /* SceneDelegate.swift in Sources */,
 				E154C6562616266D0018DB1E /* Color.swift in Sources */,

@@ -57,5 +57,21 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "listToDetail", sender: self)
+    }
+    
+    // MARK:- Prepare Segue
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "listToDetail") {
+            if let vc = segue.destination as? MovieDetailViewController {
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    vc.movie = movies[indexPath.row]
+                }
+            }
+        }
+    }
 }
 
