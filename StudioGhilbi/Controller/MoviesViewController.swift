@@ -7,15 +7,12 @@
 
 import UIKit
 
-class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MovieModelDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let movies: [Movie] = [
-        Movie(id: "1", title: "Castle in the Sky", director: "Hayao Miyazaki", releaseDate: "1986", description: ""),
-        Movie(id: "2", title: "Grave of the Fireflies", director: "Isao Takahata", releaseDate: "1988", description: ""),
-        Movie(id: "3", title: "My Neighbor Totoro", director: "Hayao Miyazaki", releaseDate: "1988", description: ""),
-    ]
+    let movieModel = MovieModel()
+    var movies: [Movie] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +20,27 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
+        
+        movieModel.delegate = self
+        movieModel.setupMovieList()
     }
-
+    
+    // MARK: - Manipulate Movie Data
+    
+    func didUpdateMovies(_ model: MovieModel, movies: [Movie]) {
+        DispatchQueue.main.async {
+            self.movies = movies
+            self.tableView.reloadData()
+        }
+    }
+    
+    func didFailWithError(error: Error, errorMessage: String) {
+        print(errorMessage)
+    }
+    
+    
+    // MARK:- TableView DataSource, Delegate
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }

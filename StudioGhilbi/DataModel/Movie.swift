@@ -7,18 +7,18 @@
 
 import Foundation
 
-class Movie {
+struct Movie: Codable {
     let id: String
     let title: String
     let director: String
     let releaseDate: String
     let description: String
     
-    init(id: String, title: String, director: String, releaseDate: String, description: String) {
-        self.id = id
-        self.title = title
-        self.director = director
-        self.releaseDate = releaseDate
-        self.description = description
+    enum CodingKeys: String, CodingKey {
+        case id
+        case title
+        case director
+        case releaseDate = "release_date"
+        case description
     }
 }

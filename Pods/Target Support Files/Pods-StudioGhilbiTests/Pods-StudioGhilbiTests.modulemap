@@ -1,0 +1,6 @@
+module Pods_StudioGhilbiTests {
+  umbrella header "Pods-StudioGhilbiTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
