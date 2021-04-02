@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FilterViewControllerDelegate {
-    func didUpdateFilter(_ filters: [String: [String]])
+    func didUpdateFilter(_ filters: [String: [String]]?)
 }
 
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, PickerTableViewCellDelegate {
@@ -37,7 +37,12 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     @IBAction func doneButtonPressed(_ sender: Any) {
-        let filters = filterDateRange ? ["yearRange": [selectedMinYear, selectedMaxYear]] : ["year": [selectedYear]]
+        var filters: [String: [String]]?
+        if selectedMinYear != "" || selectedMaxYear != "" {
+            filters = ["yearRange": [selectedMinYear, selectedMaxYear]]
+        } else if selectedYear != "" {
+            filters = ["year": [selectedYear]]
+        }
         delegate?.didUpdateFilter(filters)
         self.dismiss(animated: true, completion: nil)
     }

@@ -12,6 +12,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     let movieModel = MovieModel()
+    var allMovies: [Movie] = []
     var movies: [Movie] = []
     var headerTitle = "Movies"
     var year: String = ""
@@ -37,6 +38,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func didUpdateMovies(_ model: MovieModel, movies: [Movie]) {
         DispatchQueue.main.async {
+            self.allMovies = movies
             self.movies = movies
             self.tableView.reloadData()
         }
@@ -48,30 +50,35 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - Filter
     
-    func didUpdateFilter(_ filters: [String: [String]]) {
-        if let yearRangeFilter = filters["yearRange"] {
-            minYear = yearRangeFilter[0]
-            maxYear = yearRangeFilter[1]
-            if minYear != "" && maxYear != "" {
-                headerTitle = "\(minYear) - \(maxYear)"
-            } else if minYear != "" {
-                headerTitle = "Filter by Min Year \(minYear)"
-            } else if maxYear != "" {
-                headerTitle = "Filter by Max Year \(maxYear)"
+    func didUpdateFilter(_ filters: [String: [String]]?) {
+        if let safeFilters = filters {
+            if let yearRangeFilter = safeFilters["yearRange"] {
+                minYear = yearRangeFilter[0]
+                maxYear = yearRangeFilter[1]
+                if minYear != "" && maxYear != "" {
+                    headerTitle = "\(minYear) - \(maxYear)"
+                } else if minYear != "" {
+                    headerTitle = "Filter by Min Year \(minYear)"
+                } else if maxYear != "" {
+                    headerTitle = "Filter by Max Year \(maxYear)"
+                }
+                movies = movieModel.filterMovieByYear(allMovies, minYear: minYear, maxYear: maxYear)
+            } else if let yearFilter = safeFilters["year"] {
+                year = yearFilter[0]
+                headerTitle = "Movies in \(year)"
+                movies = movieModel.filterMovieByYear(allMovies, year)
             }
-            tableView.reloadData()
-        } else if let yearFilter = filters["year"] {
-            year = yearFilter[0]
-            headerTitle = "Movies in \(year)"
-            tableView.reloadData()
+        } else {
+            movies = allMovies
         }
+        tableView.reloadData()
     }
     
     
     // MARK:- TableView DataSource, Delegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return movies.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

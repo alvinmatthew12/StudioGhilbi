@@ -44,4 +44,19 @@ class MovieModel {
         }).disposed(by: disposeBag)
     }
     
+    func filterMovieByYear(_ movies: [Movie], _ year: String) -> [Movie] {
+        return movies.filter { $0.releaseDate == year }
+    }
+    
+    func filterMovieByYear(_ movies: [Movie], minYear: String, maxYear: String) -> [Movie] {
+        if minYear != "" && maxYear != "" {
+            return movies.filter { Int($0.releaseDate)! >= Int(minYear)! && Int($0.releaseDate)! <= Int(maxYear)! }
+        } else if maxYear != "" {
+            return movies.filter { Int($0.releaseDate)! <= Int(maxYear)! }
+        } else if minYear != "" {
+            return movies.filter { Int($0.releaseDate)! >= Int(minYear)! }
+        }
+        return []
+    }
+    
 }
