@@ -7,12 +7,16 @@
 
 import UIKit
 
-class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MovieModelDelegate {
+class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MovieModelDelegate, FilterViewControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     let movieModel = MovieModel()
     var movies: [Movie] = []
+    var headerTitle = "Movies"
+    var year: String = ""
+    var minYear: String = ""
+    var maxYear: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +27,10 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         movieModel.delegate = self
         movieModel.setupMovieList()
+    }
+    
+    @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "listToFilter", sender: self)
     }
     
     // MARK: - Manipulate Movie Data
@@ -38,6 +46,27 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         print(errorMessage)
     }
     
+    // MARK: - Filter
+    
+    func didUpdateFilter(_ filters: [String: [String]]) {
+        if let yearRangeFilter = filters["yearRange"] {
+            minYear = yearRangeFilter[0]
+            maxYear = yearRangeFilter[1]
+            if minYear != "" && maxYear != "" {
+                headerTitle = "\(minYear) - \(maxYear)"
+            } else if minYear != "" {
+                headerTitle = "Filter by Min Year \(minYear)"
+            } else if maxYear != "" {
+                headerTitle = "Filter by Max Year \(maxYear)"
+            }
+            tableView.reloadData()
+        } else if let yearFilter = filters["year"] {
+            year = yearFilter[0]
+            headerTitle = "Movies in \(year)"
+            tableView.reloadData()
+        }
+    }
+    
     
     // MARK:- TableView DataSource, Delegate
     
@@ -46,20 +75,35 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
-        cell.thumbnailView.backgroundColor = .random
-        cell.titleLabel.text = movies[indexPath.row].title
-        cell.directorLabel.text = movies[indexPath.row].director
-        cell.yearLabel.text = movies[indexPath.row].releaseDate
-        return cell
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            cell.textLabel?.text = headerTitle
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+            return cell
+        }
+        if indexPath.row > 0 {
+            let row = indexPath.row - 1
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
+            cell.thumbnailView.backgroundColor = .random
+            cell.titleLabel.text = movies[row].title
+            cell.directorLabel.text = movies[row].director
+            cell.yearLabel.text = movies[row].releaseDate
+            return cell
+        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 40
+        }
         return 80
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "listToDetail", sender: self)
+        if indexPath.row > 0 {
+            performSegue(withIdentifier: "listToDetail", sender: self)
+        }
     }
     
     // MARK:- Prepare Segue
@@ -68,8 +112,17 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if(segue.identifier == "listToDetail") {
             if let vc = segue.destination as? MovieDetailViewController {
                 if let indexPath = tableView.indexPathForSelectedRow {
-                    vc.movie = movies[indexPath.row]
+                    let row = indexPath.row - 1
+                    vc.movie = movies[row]
                 }
+            }
+        }
+        if(segue.identifier == "listToFilter") {
+            if let vc = segue.destination as? FilterViewController {
+                vc.delegate = self
+                vc.selectedYear = year
+                vc.selectedMinYear = minYear
+                vc.selectedMaxYear = maxYear
             }
         }
     }
