@@ -130,6 +130,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 vc.selectedYear = year
                 vc.selectedMinYear = minYear
                 vc.selectedMaxYear = maxYear
+                var availableYears: [String] = []
+                for movie in allMovies {
+                    availableYears.append(movie.releaseDate)
+                }
+                vc.availableYears = availableYears.sorted().reversed()
+                vc.maxYearRange = allMovies.map { (Int($0.releaseDate) ?? 0) }.max() ?? 0
+                vc.minYearRange = allMovies.map { Int($0.releaseDate) ?? 0 }.min() ?? 0
             }
         }
     }

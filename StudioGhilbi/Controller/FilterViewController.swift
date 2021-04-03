@@ -16,6 +16,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     
     let tableContents = ["switchCell", "valueCell", "pickerCell"]
+    var availableYears: [String] = []
+    var minYearRange: Int = 0
+    var maxYearRange: Int = 0
     
     var showPicker: Bool = true
     var filterDateRange: Bool = false
@@ -104,11 +107,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             var yearsAsc: [String] = ["-"]
             var yearsDesc: [String] = ["-"]
-            for y in stride(from: 1950, to: 2022, by: 1)  {
+            for y in stride(from: minYearRange, to: maxYearRange, by: 1)  {
                 yearsAsc.append("\(y)")
                 yearsDesc.insert("\(y)", at: 1)
             }
-            cell.items = filterDateRange ? [yearsAsc, yearsDesc] : [yearsDesc]
+            cell.items = filterDateRange ? [yearsAsc, yearsDesc] : [availableYears]
             cell.pickerView.reloadAllComponents()
             
             return cell
