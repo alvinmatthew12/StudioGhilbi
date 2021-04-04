@@ -19,6 +19,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var availableYears: [String] = []
     var minYearRange: Int = 0
     var maxYearRange: Int = 0
+    var yearArrayAsc: [String] = []
+    var yearArrayDesc: [String] = []
     
     var showPicker: Bool = true
     var filterDateRange: Bool = false
@@ -36,6 +38,19 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if selectedMinYear != "" || selectedMaxYear != "" {
             filterDateRange = true
+        }
+        setupYearPickerItems()
+    }
+    
+    func setupYearPickerItems() {
+        yearArrayAsc = ["-"]
+        yearArrayDesc = ["-"]
+        for y in stride(from: minYearRange != 0 ? minYearRange : 1980, to: maxYearRange != 0 ? maxYearRange : 2021, by: 1)  {
+            yearArrayAsc.append("\(y)")
+            yearArrayDesc.insert("\(y)", at: 1)
+        }
+        if availableYears.count < 1 {
+            availableYears = yearArrayDesc
         }
     }
 
@@ -104,14 +119,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.key = filterDateRange ? "yearRange" : "year"
             cell.components = filterDateRange ? 2 : 1
             cell.selectedItems = filterDateRange ? [selectedMinYear, selectedMaxYear] : [selectedYear]
-            
-            var yearsAsc: [String] = ["-"]
-            var yearsDesc: [String] = ["-"]
-            for y in stride(from: minYearRange, to: maxYearRange, by: 1)  {
-                yearsAsc.append("\(y)")
-                yearsDesc.insert("\(y)", at: 1)
-            }
-            cell.items = filterDateRange ? [yearsAsc, yearsDesc] : [availableYears]
+            cell.items = filterDateRange ? [yearArrayAsc, yearArrayDesc] : [availableYears]
             cell.pickerView.reloadAllComponents()
             
             return cell
@@ -136,18 +144,18 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func didSelectItem(_ key: String, _ selectedItems: [String]) {
         if key == "yearRange" {
-            if selectedItems[0] != "-" {
+            if selectedItems[0] != "-" || selectedItems[0] != "" {
                 selectedMinYear = selectedItems[0]
             } else {
                 selectedMinYear = ""
             }
-            if selectedItems[1] != "-" {
+            if selectedItems[1] != "-" || selectedItems[1] != "" {
                 selectedMaxYear = selectedItems[1]
             } else {
                 selectedMaxYear = ""
             }
         } else if key == "year" {
-            if selectedItems[0] != "-" {
+            if selectedItems[0] != "-" || selectedItems[0] != "" {
                 selectedYear = selectedItems[0]
             }
         }
