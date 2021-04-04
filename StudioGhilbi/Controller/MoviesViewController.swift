@@ -18,6 +18,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let movieModel = MovieModel()
     var allMovies: [Movie] = []
     var movies: [Movie] = []
+    var movieColors: [UIColor] = []
     var headerTitle = "Movies"
     var year: String = ""
     var minYear: String = ""
@@ -67,6 +68,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         DispatchQueue.main.async {
             self.allMovies = movies
             self.movies = movies
+            self.setupMovieColors()
             self.hideActivityIndicator()
             self.tableView.reloadData()
         }
@@ -80,11 +82,17 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func setupMovieColors() {
+        movieColors = []
+        movies.forEach { _ in movieColors.append(.random) }
+    }
+    
     // MARK: - Filter
     
     func didUpdateFilter(_ filters: [String: [String]]?) {
         if let safeFilters = filters {
             if let yearRangeFilter = safeFilters["yearRange"] {
+                year = ""
                 minYear = yearRangeFilter[0]
                 maxYear = yearRangeFilter[1]
                 if minYear != "" && maxYear != "" {
@@ -96,11 +104,14 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
                 movies = movieModel.filterMovieByYear(allMovies, minYear: minYear, maxYear: maxYear)
             } else if let yearFilter = safeFilters["year"] {
+                minYear = ""
+                maxYear = ""
                 year = yearFilter[0]
                 headerTitle = "Movies in \(year)"
                 movies = movieModel.filterMovieByYear(allMovies, year)
             }
         } else {
+            headerTitle = "Movies"
             movies = allMovies
         }
         tableView.reloadData()
@@ -123,7 +134,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath.row > 0 {
             let row = indexPath.row - 1
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
-            cell.thumbnailView.backgroundColor = .random
+            cell.thumbnailView.backgroundColor = movieColors[row]
             cell.titleLabel.text = movies[row].title
             cell.directorLabel.text = movies[row].director
             cell.yearLabel.text = movies[row].releaseDate
@@ -152,6 +163,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let vc = segue.destination as? MovieDetailViewController {
                 if let indexPath = tableView.indexPathForSelectedRow {
                     let row = indexPath.row - 1
+                    vc.color = movieColors[row]
                     vc.movie = movies[row]
                 }
             }
@@ -162,10 +174,9 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 vc.selectedYear = year
                 vc.selectedMinYear = minYear
                 vc.selectedMaxYear = maxYear
+                
                 var availableYears: [String] = []
-                for movie in allMovies {
-                    availableYears.append(movie.releaseDate)
-                }
+                allMovies.forEach { movie in availableYears.append(movie.releaseDate) }
                 vc.availableYears = availableYears.sorted().reversed()
                 vc.maxYearRange = allMovies.map { (Int($0.releaseDate) ?? 0) }.max() ?? 0
                 vc.minYearRange = allMovies.map { Int($0.releaseDate) ?? 0 }.min() ?? 0

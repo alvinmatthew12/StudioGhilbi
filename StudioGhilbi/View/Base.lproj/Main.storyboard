@@ -241,7 +241,7 @@
                                                 <action selector="doneButtonPressed:" destination="W2f-wX-vMa" id="YHo-Uo-LRW"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Reset" style="plain" id="7uD-r1-gfm">
+                                        <barButtonItem key="rightBarButtonItem" title="Reset" id="7uD-r1-gfm">
                                             <connections>
                                                 <action selector="resetButtonPressed:" destination="W2f-wX-vMa" id="BZp-z8-1eU"/>
                                             </connections>
@@ -369,6 +369,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="WeB-Wo-Hae"/>
                     <connections>
+                        <outlet property="coverView" destination="Q5T-nT-bNM" id="D77-mC-s7K"/>
                         <outlet property="descriptionLabel" destination="n5v-Gs-omE" id="wef-Xr-uLe"/>
                         <outlet property="directorLabel" destination="hft-gL-7iC" id="Ugi-6T-7Sf"/>
                         <outlet property="titleLabel" destination="Sah-Ee-gh6" id="EVL-F9-T3n"/>

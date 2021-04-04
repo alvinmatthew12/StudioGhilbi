@@ -62,6 +62,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             filters = ["yearRange": [selectedMinYear, selectedMaxYear]]
         } else if selectedYear != "" {
             filters = ["year": [selectedYear]]
+        } else {
+            filters = nil
         }
         delegate?.didUpdateFilter(filters)
         self.dismiss(animated: true, completion: nil)
