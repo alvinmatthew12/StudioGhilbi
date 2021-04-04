@@ -13,7 +13,7 @@ protocol MovieModelDelegate {
     func didFailWithError(error: Error, errorMessage: String)
 }
 
-class MovieModel {
+struct MovieModel {
     
     private let disposeBag = DisposeBag()
     var delegate: MovieModelDelegate?

@@ -15,7 +15,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tryAgainButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    let movieModel = MovieModel()
+    var movieModel = MovieModel()
     var allMovies: [Movie] = []
     var movies: [Movie] = []
     var movieColors: [UIColor] = []
