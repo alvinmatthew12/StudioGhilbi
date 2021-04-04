@@ -45,7 +45,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func didFailWithError(error: Error, errorMessage: String) {
-        print(errorMessage)
+        self.showAlert(message: errorMessage)
     }
     
     // MARK: - Filter
@@ -56,7 +56,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 minYear = yearRangeFilter[0]
                 maxYear = yearRangeFilter[1]
                 if minYear != "" && maxYear != "" {
-                    headerTitle = "\(minYear) - \(maxYear)"
+                    headerTitle = "Movies from \(minYear) to \(maxYear)"
                 } else if minYear != "" {
                     headerTitle = "Filter by Min Year \(minYear)"
                 } else if maxYear != "" {

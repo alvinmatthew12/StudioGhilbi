@@ -56,7 +56,7 @@ class PickerTableViewCell: UITableViewCell, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedItems[component] = items[component][row]
+        selectedItems[component] = items[component][row] != "-" ? items[component][row] : ""
         delegate?.didSelectItem(key, selectedItems)
     }
 }

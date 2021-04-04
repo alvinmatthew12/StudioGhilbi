@@ -19,6 +19,7 @@
 		E154C650261622E60018DB1E /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154C64F261622E60018DB1E /* Movie.swift */; };
 		E154C6562616266D0018DB1E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154C6552616266D0018DB1E /* Color.swift */; };
 		E154C65F2616293C0018DB1E /* StudioGhilbiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154C65E2616293C0018DB1E /* StudioGhilbiTests.swift */; };
+		E1BC6A152619EB0B00E25D4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BC6A142619EB0B00E25D4E /* ViewController.swift */; };
 		E1D071D826161C6400D99780 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D071D626161C6400D99780 /* MovieTableViewCell.swift */; };
 		E1D071D926161C6400D99780 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D071D726161C6400D99780 /* MovieTableViewCell.xib */; };
 		E1E485982614C98500361A85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E485972614C98500361A85 /* AppDelegate.swift */; };
@@ -57,6 +58,7 @@
 		E154C65C2616293C0018DB1E /* StudioGhilbiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudioGhilbiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E154C65E2616293C0018DB1E /* StudioGhilbiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioGhilbiTests.swift; sourceTree = "<group>"; };
 		E154C6602616293C0018DB1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1BC6A142619EB0B00E25D4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E1D071D626161C6400D99780 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		E1D071D726161C6400D99780 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
 		E1E485942614C98500361A85 /* StudioGhilbi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudioGhilbi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				E154C6552616266D0018DB1E /* Color.swift */,
+				E1BC6A142619EB0B00E25D4E /* ViewController.swift */,
 			);
 			path = "Common Extention";
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				E11B012226171AF400ED01F6 /* SwitchTableViewCell.swift in Sources */,
 				E1E485982614C98500361A85 /* AppDelegate.swift in Sources */,
 				E127C949261668A400C1FE36 /* FilterViewController.swift in Sources */,
+				E1BC6A152619EB0B00E25D4E /* ViewController.swift in Sources */,
 				E127C93926163D3000C1FE36 /* MovieDetailViewController.swift in Sources */,
 				E1D071D826161C6400D99780 /* MovieTableViewCell.swift in Sources */,
 				E1E4859A2614C98500361A85 /* SceneDelegate.swift in Sources */,
@@ -617,6 +621,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GBBFD52US3;
 				INFOPLIST_FILE = StudioGhilbi/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -637,6 +642,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GBBFD52US3;
 				INFOPLIST_FILE = StudioGhilbi/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

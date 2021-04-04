@@ -51,6 +51,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         if availableYears.count < 1 {
             availableYears = yearArrayDesc
+        } else {
+            availableYears.insert("-", at: 0)
         }
     }
 
@@ -121,7 +123,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.selectedItems = filterDateRange ? [selectedMinYear, selectedMaxYear] : [selectedYear]
             cell.items = filterDateRange ? [yearArrayAsc, yearArrayDesc] : [availableYears]
             cell.pickerView.reloadAllComponents()
-            
             return cell
         }
         return UITableViewCell()
@@ -144,20 +145,16 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func didSelectItem(_ key: String, _ selectedItems: [String]) {
         if key == "yearRange" {
-            if selectedItems[0] != "-" || selectedItems[0] != "" {
-                selectedMinYear = selectedItems[0]
-            } else {
-                selectedMinYear = ""
+            let minYear = selectedItems[0]
+            let maxYear = selectedItems[1]
+            if  minYear != "" && maxYear != "" && maxYear < minYear {
+                self.showAlert(title: "Invalid Range", message: "The minimum year must not be greater than the maximum year or vice versa.")
+                return
             }
-            if selectedItems[1] != "-" || selectedItems[1] != "" {
-                selectedMaxYear = selectedItems[1]
-            } else {
-                selectedMaxYear = ""
-            }
+            selectedMinYear = minYear
+            selectedMaxYear = maxYear
         } else if key == "year" {
-            if selectedItems[0] != "-" || selectedItems[0] != "" {
-                selectedYear = selectedItems[0]
-            }
+            selectedYear = selectedItems[0]
         }
         tableView.reloadData()
     }
