@@ -45,7 +45,9 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func didFailWithError(error: Error, errorMessage: String) {
-        self.showAlert(message: errorMessage)
+        DispatchQueue.main.async {
+            self.showAlert(message: errorMessage)
+        }
     }
     
     // MARK: - Filter

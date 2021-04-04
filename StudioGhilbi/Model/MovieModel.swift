@@ -23,16 +23,22 @@ class MovieModel {
         return Observable.create { observer -> Disposable in
             let task = URLSession.shared.dataTask(with: urlRequest) { (data, res, error) in
                 do {
-                    let jsonData = try JSONDecoder().decode([Movie].self, from: data!)
-                    observer.onNext(jsonData)
-                    observer.onCompleted()
+                    if error != nil {
+                        observer.onError(error!)
+                    } else {
+                        let jsonData = try JSONDecoder().decode([Movie].self, from: data ?? Data())
+                        observer.onNext(jsonData)
+                        observer.onCompleted()
+                    }
                 } catch {
                     observer.onError(error)
                 }
             }
             task.resume()
             
-            return Disposables.create()
+            return Disposables.create {
+                task.cancel()
+            }
         }
     }
     
