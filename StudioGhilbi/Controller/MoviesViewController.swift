@@ -9,6 +9,10 @@ import UIKit
 
 class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MovieModelDelegate, FilterViewControllerDelegate {
     
+    @IBOutlet weak var activityView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var tryAgainButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     let movieModel = MovieModel()
@@ -21,25 +25,49 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        tryAgainButton.layer.cornerRadius = 10
+        activityIndicator.hidesWhenStopped = true
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         
         movieModel.delegate = self
-        movieModel.setupMovieList()
+        loadMovieList()
     }
     
     @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "listToFilter", sender: self)
     }
     
+    @IBAction func tryAgainButtonPressed(_ sender: Any) {
+        loadMovieList()
+    }
+    
+    func showActivityIndicator() {
+        activityIndicator.startAnimating()
+        activityView.isHidden = false
+    }
+    
+    func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityView.isHidden = true
+    }
+    
     // MARK: - Manipulate Movie Data
+    
+    func loadMovieList() {
+        errorView.isHidden = true
+        showActivityIndicator()
+        movieModel.setupMovieList()
+    }
     
     func didUpdateMovies(_ model: MovieModel, movies: [Movie]) {
         DispatchQueue.main.async {
             self.allMovies = movies
             self.movies = movies
+            self.hideActivityIndicator()
             self.tableView.reloadData()
         }
     }
@@ -47,6 +75,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func didFailWithError(error: Error, errorMessage: String) {
         DispatchQueue.main.async {
             self.showAlert(message: errorMessage)
+            self.errorView.isHidden = false
+            self.hideActivityIndicator()
         }
     }
     
