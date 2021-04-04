@@ -15,14 +15,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var tableView: UITableView!
     
-    let tableContents = ["switchCell", "valueCell", "pickerCell"]
+    let tableContents = ["switchCell", "valueCell", "pickerCell", "pickerRangeCell"]
     var availableYears: [String] = []
     var minYearRange: Int = 0
     var maxYearRange: Int = 0
     var yearArrayAsc: [String] = []
     var yearArrayDesc: [String] = []
     
-    var showPicker: Bool = true
     var filterDateRange: Bool = false
     var selectedYear: String = ""
     var selectedMinYear: String = ""
@@ -120,27 +119,32 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if tableContents[indexPath.row] == "pickerCell" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PickerCell", for: indexPath) as! PickerTableViewCell
             cell.delegate = self
-            cell.key = filterDateRange ? "yearRange" : "year"
-            cell.components = filterDateRange ? 2 : 1
-            cell.selectedItems = filterDateRange ? [selectedMinYear, selectedMaxYear] : [selectedYear]
-            cell.items = filterDateRange ? [yearArrayAsc, yearArrayDesc] : [availableYears]
+            cell.key = "year"
+            cell.components = 1
+            cell.selectedItems = [selectedYear]
+            cell.items = [availableYears]
+            cell.pickerView.reloadAllComponents()
+            return cell
+        }
+        if tableContents[indexPath.row] == "pickerRangeCell" {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PickerCell", for: indexPath) as! PickerTableViewCell
+            cell.delegate = self
+            cell.key = "yearRange"
+            cell.components = 2
+            cell.selectedItems = [selectedMinYear, selectedMaxYear]
+            cell.items = [yearArrayAsc, yearArrayDesc]
             cell.pickerView.reloadAllComponents()
             return cell
         }
         return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableContents[indexPath.row] == "valueCell" {
-            showPicker = !showPicker
-            tableView.beginUpdates()
-            tableView.endUpdates()
-        }
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableContents[indexPath.row] == "pickerCell" {
-            return showPicker ? 140 : 0
+            return !filterDateRange ? 140 : 0
+        }
+        if tableContents[indexPath.row] == "pickerRangeCell" {
+            return filterDateRange ? 140 : 0
         }
         return 50
     }

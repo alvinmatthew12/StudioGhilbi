@@ -111,6 +111,9 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 movies = movieModel.filterMovieByYear(allMovies, year)
             }
         } else {
+            year = ""
+            minYear = ""
+            maxYear = ""
             headerTitle = "Movies"
             movies = allMovies
         }
@@ -176,7 +179,11 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 vc.selectedMaxYear = maxYear
                 
                 var availableYears: [String] = []
-                allMovies.forEach { movie in availableYears.append(movie.releaseDate) }
+                for movie in allMovies {
+                    if availableYears.filter({ $0 == movie.releaseDate }).count < 1 {
+                        availableYears.append(movie.releaseDate)
+                    }
+                }
                 vc.availableYears = availableYears.sorted().reversed()
                 vc.maxYearRange = allMovies.map { (Int($0.releaseDate) ?? 0) }.max() ?? 0
                 vc.minYearRange = allMovies.map { Int($0.releaseDate) ?? 0 }.min() ?? 0
