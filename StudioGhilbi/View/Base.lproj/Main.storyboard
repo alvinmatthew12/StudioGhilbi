@@ -236,14 +236,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                                 <items>
                                     <navigationItem title="Filter" id="oZK-li-o6c">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="bcy-kK-fUF">
-                                            <connections>
-                                                <action selector="doneButtonPressed:" destination="W2f-wX-vMa" id="YHo-Uo-LRW"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Reset" id="7uD-r1-gfm">
+                                        <barButtonItem key="leftBarButtonItem" title="Reset" id="7uD-r1-gfm">
                                             <connections>
                                                 <action selector="resetButtonPressed:" destination="W2f-wX-vMa" id="BZp-z8-1eU"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="bcy-kK-fUF">
+                                            <connections>
+                                                <action selector="doneButtonPressed:" destination="W2f-wX-vMa" id="YHo-Uo-LRW"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
