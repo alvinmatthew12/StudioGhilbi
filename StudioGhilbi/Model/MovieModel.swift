@@ -13,12 +13,12 @@ protocol MovieModelDelegate {
     func didFailWithError(error: Error, errorMessage: String)
 }
 
-struct MovieModel {
+class MovieModel {
     
-    private let disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
     var delegate: MovieModelDelegate?
     
-    private func getMovies() -> Observable<[Movie]> {
+    func getMovies() -> Observable<[Movie]> {
         let urlRequest = URLRequest(url:  URL(string: "https://ghibliapi.herokuapp.com/films")!)
         return Observable.create { observer -> Disposable in
             let task = URLSession.shared.dataTask(with: urlRequest) { (data, res, error) in
