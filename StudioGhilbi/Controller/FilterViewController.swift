@@ -27,6 +27,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var selectedMinYear: String = ""
     var selectedMaxYear: String = ""
     
+    var yearPickerView = UIPickerView()
+    var yearRangePickerView = UIPickerView()
+    
     var delegate: FilterViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -81,7 +84,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         selectedYear = ""
         selectedMinYear = ""
         selectedMaxYear = ""
-        tableView.reloadData()
+        yearPickerView.selectRow(0, inComponent: 0, animated: false)
+        yearRangePickerView.selectRow(0, inComponent: 0, animated: false)
+        yearRangePickerView.selectRow(0, inComponent: 1, animated: false)
+        let allButFirst = (self.tableView.indexPathsForVisibleRows ?? []).filter { $0.row != 0 }
+        tableView.reloadRows(at: allButFirst, with: .automatic)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,7 +105,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         if tableContents[indexPath.row] == "valueCell" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueTableViewCell
-            cell.label.text = "Filter by Year"
+            cell.label.text = filterDateRange ? "Filter by Year Range" : "Filter by Available Year"
             
             var valueText = ""
             if filterDateRange {
@@ -121,8 +128,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.delegate = self
             cell.key = "year"
             cell.components = 1
-            cell.selectedItems = [selectedYear]
             cell.items = [availableYears]
+            cell.selectedItems = [selectedYear]
+            yearPickerView = cell.pickerView
             cell.pickerView.reloadAllComponents()
             return cell
         }
@@ -131,8 +139,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.delegate = self
             cell.key = "yearRange"
             cell.components = 2
-            cell.selectedItems = [selectedMinYear, selectedMaxYear]
             cell.items = [yearArrayAsc, yearArrayDesc]
+            cell.selectedItems = [selectedMinYear, selectedMaxYear]
+            yearRangePickerView = cell.pickerView
             cell.pickerView.reloadAllComponents()
             return cell
         }
@@ -162,6 +171,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else if key == "year" {
             selectedYear = selectedItems[0]
         }
-        tableView.reloadData()
+        let indexPath = IndexPath(row: 1, section: 0)
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
