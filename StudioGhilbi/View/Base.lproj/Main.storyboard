@@ -31,68 +31,14 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKR-JQ-RLA">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="ACl-bf-JZT">
-                                        <rect key="frame" x="188.5" y="385.5" width="37" height="37"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="ACl-bf-JZT" firstAttribute="centerX" secondItem="NKR-JQ-RLA" secondAttribute="centerX" id="DQd-TB-Heo"/>
-                                    <constraint firstItem="ACl-bf-JZT" firstAttribute="centerY" secondItem="NKR-JQ-RLA" secondAttribute="centerY" id="iSw-4O-UJ4"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rb-9l-Hbx">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46K-yL-Zfk">
-                                        <rect key="frame" x="152" y="367" width="110" height="40"/>
-                                        <color key="backgroundColor" systemColor="linkColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="110" id="jAq-Du-AdB"/>
-                                            <constraint firstAttribute="height" constant="40" id="y5d-WR-NN8"/>
-                                        </constraints>
-                                        <state key="normal" title="Try Again">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tryAgainButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kM9-vb-YSy"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unable to load movies" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyF-wh-EUr">
-                                        <rect key="frame" x="20" y="321" width="374" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="46K-yL-Zfk" firstAttribute="top" secondItem="fyF-wh-EUr" secondAttribute="bottom" constant="25" id="Ejo-pJ-4cO"/>
-                                    <constraint firstItem="fyF-wh-EUr" firstAttribute="leading" secondItem="7rb-9l-Hbx" secondAttribute="leading" constant="20" id="MS7-eh-LOo"/>
-                                    <constraint firstItem="46K-yL-Zfk" firstAttribute="centerX" secondItem="7rb-9l-Hbx" secondAttribute="centerX" id="Zw8-qE-Kbn"/>
-                                    <constraint firstItem="46K-yL-Zfk" firstAttribute="centerY" secondItem="7rb-9l-Hbx" secondAttribute="centerY" id="dSX-jz-hLO"/>
-                                    <constraint firstAttribute="trailing" secondItem="fyF-wh-EUr" secondAttribute="trailing" constant="20" id="gcr-n9-mTk"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="7rb-9l-Hbx" secondAttribute="bottom" constant="34" id="46p-j9-Ocl"/>
                             <constraint firstItem="41V-jk-KTc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4Uc-dq-Eqw"/>
-                            <constraint firstAttribute="bottom" secondItem="NKR-JQ-RLA" secondAttribute="bottom" id="9oO-4S-LQB"/>
-                            <constraint firstItem="NKR-JQ-RLA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IxJ-C4-7z1"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="7rb-9l-Hbx" secondAttribute="trailing" id="Jgi-pm-yZm"/>
                             <constraint firstItem="41V-jk-KTc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="M2g-bT-3Hb"/>
                             <constraint firstAttribute="bottom" secondItem="41V-jk-KTc" secondAttribute="bottom" id="Qw6-Of-qlO"/>
-                            <constraint firstItem="NKR-JQ-RLA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="VDR-5j-elF"/>
                             <constraint firstItem="41V-jk-KTc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bPK-eJ-EAD"/>
-                            <constraint firstItem="7rb-9l-Hbx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="el1-zg-GAY"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NKR-JQ-RLA" secondAttribute="trailing" id="mqW-fX-wo1"/>
-                            <constraint firstItem="7rb-9l-Hbx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tF6-iy-rHi"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Studio Ghilbi" id="k11-aZ-s4Y">
@@ -105,11 +51,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="activityIndicator" destination="ACl-bf-JZT" id="Phg-sd-HO5"/>
-                        <outlet property="activityView" destination="NKR-JQ-RLA" id="NfS-oj-usj"/>
-                        <outlet property="errorView" destination="7rb-9l-Hbx" id="7SY-82-X9g"/>
                         <outlet property="tableView" destination="41V-jk-KTc" id="jiq-Vs-tUm"/>
-                        <outlet property="tryAgainButton" destination="46K-yL-Zfk" id="Emx-cr-unw"/>
                         <segue destination="FAq-qt-qs6" kind="show" identifier="listToDetail" id="kpo-Aw-9D8"/>
                         <segue destination="W2f-wX-vMa" kind="presentation" identifier="listToFilter" id="aDy-By-ixw"/>
                     </connections>

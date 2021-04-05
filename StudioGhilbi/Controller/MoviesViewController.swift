@@ -8,12 +8,8 @@
 import UIKit
 import RxSwift
 
-class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate {
+class MoviesViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate {
     
-    @IBOutlet weak var activityView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var errorView: UIView!
-    @IBOutlet weak var tryAgainButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     var movieModel = MovieModel()
@@ -44,38 +40,27 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         performSegue(withIdentifier: "listToFilter", sender: self)
     }
     
-    @IBAction func tryAgainButtonPressed(_ sender: Any) {
+    override func errorTryAgainAction() {
         loadMovieList()
-    }
-    
-    func showActivityIndicator() {
-        activityIndicator.startAnimating()
-        activityView.isHidden = false
-    }
-    
-    func hideActivityIndicator() {
-        activityIndicator.stopAnimating()
-        activityView.isHidden = true
     }
     
     // MARK: - Manipulate Movie Data
     
     func loadMovieList() {
-        errorView.isHidden = true
-        showActivityIndicator()
+        self.activityIndicatorBegin()
         movieModel.getMovies().subscribe(onNext: { (movies) in
             DispatchQueue.main.async {
                 self.allMovies = movies
                 self.movies = movies
                 self.setupMovieColors()
-                self.hideActivityIndicator()
+                self.activityIndicatorEnd()
                 self.tableView.reloadData()
             }
         }, onError: { (error) in
             DispatchQueue.main.async {
                 self.showAlert(message: error.localizedDescription)
-                self.errorView.isHidden = false
-                self.hideActivityIndicator()
+                self.showErrorView(message: "Unable to load movies")
+                self.activityIndicatorEnd()
             }
         }).disposed(by: disposeBag)
     }

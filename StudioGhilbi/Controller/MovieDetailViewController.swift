@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 
-class MovieDetailViewController: UIViewController {
+class MovieDetailViewController: BaseViewController {
 
     @IBOutlet weak var coverView: UIView!
     @IBOutlet weak var yearLabel: UILabel!
@@ -27,10 +27,15 @@ class MovieDetailViewController: UIViewController {
         loadMovie()
     }
     
+    override func errorTryAgainAction() {
+        loadMovie()
+    }
+    
     func loadMovie() {
+        self.activityIndicatorBegin()
         guard let id = movieId else {
             self.navigationController?.popViewController(animated: true)
-            self.showAlert(message: "Undifined movie id")
+            self.showAlert(title: "Undefined Movie", message: "Sorry something went wrong.")
             return
         }
         movieModel.getMovieById(id).subscribe(onNext: { (movie) in
@@ -40,10 +45,13 @@ class MovieDetailViewController: UIViewController {
                 directorLabel.text = movie.director
                 descriptionLabel.text = movie.description
                 coverView.backgroundColor = color
+                activityIndicatorEnd()
             }
         }, onError: { (error) in
-            DispatchQueue.main.async {
-                self.showAlert(message: error.localizedDescription)
+            DispatchQueue.main.async { [self] in
+                showAlert(message: error.localizedDescription)
+                showErrorView(message: "Unable to load movie detail")
+                activityIndicatorEnd()
             }
         }).disposed(by: disposeBag)
     }
