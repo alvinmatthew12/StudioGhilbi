@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class MovieDetailViewController: UIViewController {
 
@@ -15,19 +16,35 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var directorLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    var movie: Movie?
+    let movieModel = MovieModel()
+    var movieId: String?
     var color: UIColor = .random
+    
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        coverView.backgroundColor = color
-
-        if let safeMovie = movie {
-            yearLabel.text = safeMovie.releaseDate
-            titleLabel.text = safeMovie.title
-            directorLabel.text = "Directed by \(safeMovie.director)"
-            descriptionLabel.text = safeMovie.description
+        loadMovie()
+    }
+    
+    func loadMovie() {
+        guard let id = movieId else {
+            self.navigationController?.popViewController(animated: true)
+            self.showAlert(message: "Undifined movie id")
+            return
         }
+        movieModel.getMovieById(id).subscribe(onNext: { (movie) in
+            DispatchQueue.main.async { [self] in
+                yearLabel.text = movie.releaseDate
+                titleLabel.text = movie.title
+                directorLabel.text = movie.director
+                descriptionLabel.text = movie.description
+                coverView.backgroundColor = color
+            }
+        }, onError: { (error) in
+            DispatchQueue.main.async {
+                self.showAlert(message: error.localizedDescription)
+            }
+        }).disposed(by: disposeBag)
     }
 }

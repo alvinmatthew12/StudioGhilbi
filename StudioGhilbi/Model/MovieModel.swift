@@ -37,6 +37,31 @@ class MovieModel {
         }
     }
     
+    func getMovieById(_ id: String) -> Observable<Movie> {
+        let urlRequest = URLRequest(url:  URL(string: "\(baseUrl)/\(id)\(defaultFieldParams)")!)
+        return Observable.create { observer -> Disposable in
+            let task = URLSession.shared.dataTask(with: urlRequest) { (data, res, error) in
+                do {
+                    if error != nil {
+                        print(error)
+                        observer.onError(error!)
+                    } else {
+                        let jsonData = try JSONDecoder().decode(Movie.self, from: data ?? Data())
+                        observer.onNext(jsonData)
+                        observer.onCompleted()
+                    }
+                } catch {
+                    observer.onError(error)
+                }
+            }
+            task.resume()
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+    
     func filterMovieByYear(_ movies: [Movie], _ year: String) -> [Movie] {
         return movies.filter { $0.releaseDate == year }
     }

@@ -165,7 +165,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if let indexPath = tableView.indexPathForSelectedRow {
                     let row = indexPath.row - 1
                     vc.color = movieColors[row]
-                    vc.movie = movies[row]
+                    vc.movieId = movies[row].id
                 }
             }
         }
