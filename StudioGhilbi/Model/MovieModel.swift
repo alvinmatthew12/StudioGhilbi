@@ -8,18 +8,13 @@
 import Foundation
 import RxSwift
 
-protocol MovieModelDelegate {
-    func didUpdateMovies(_ model: MovieModel, movies: [Movie])
-    func didFailWithError(error: Error, errorMessage: String)
-}
-
 class MovieModel {
     
-    let disposeBag = DisposeBag()
-    var delegate: MovieModelDelegate?
+    let baseUrl = "https://ghibliapi.herokuapp.com/films"
+    let defaultFieldParams = "?fields=id,title,description,release_date,director"
     
     func getMovies() -> Observable<[Movie]> {
-        let urlRequest = URLRequest(url:  URL(string: "https://ghibliapi.herokuapp.com/films")!)
+        let urlRequest = URLRequest(url:  URL(string: "\(baseUrl)\(defaultFieldParams)")!)
         return Observable.create { observer -> Disposable in
             let task = URLSession.shared.dataTask(with: urlRequest) { (data, res, error) in
                 do {
@@ -40,14 +35,6 @@ class MovieModel {
                 task.cancel()
             }
         }
-    }
-    
-    func setupMovieList() {
-        getMovies().subscribe(onNext: { (movies) in
-            self.delegate?.didUpdateMovies(self, movies: movies)
-        }, onError: { (error) in
-            self.delegate?.didFailWithError(error: error, errorMessage: error.localizedDescription)
-        }).disposed(by: disposeBag)
     }
     
     func filterMovieByYear(_ movies: [Movie], _ year: String) -> [Movie] {

@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import RxSwift
 
-class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MovieModelDelegate, FilterViewControllerDelegate {
+class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FilterViewControllerDelegate {
     
     @IBOutlet weak var activityView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -24,6 +25,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var minYear: String = ""
     var maxYear: String = ""
     
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,7 +37,6 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         
-        movieModel.delegate = self
         loadMovieList()
     }
     
@@ -61,25 +63,21 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func loadMovieList() {
         errorView.isHidden = true
         showActivityIndicator()
-        movieModel.setupMovieList()
-    }
-    
-    func didUpdateMovies(_ model: MovieModel, movies: [Movie]) {
-        DispatchQueue.main.async {
-            self.allMovies = movies
-            self.movies = movies
-            self.setupMovieColors()
-            self.hideActivityIndicator()
-            self.tableView.reloadData()
-        }
-    }
-    
-    func didFailWithError(error: Error, errorMessage: String) {
-        DispatchQueue.main.async {
-            self.showAlert(message: errorMessage)
-            self.errorView.isHidden = false
-            self.hideActivityIndicator()
-        }
+        movieModel.getMovies().subscribe(onNext: { (movies) in
+            DispatchQueue.main.async {
+                self.allMovies = movies
+                self.movies = movies
+                self.setupMovieColors()
+                self.hideActivityIndicator()
+                self.tableView.reloadData()
+            }
+        }, onError: { (error) in
+            DispatchQueue.main.async {
+                self.showAlert(message: error.localizedDescription)
+                self.errorView.isHidden = false
+                self.hideActivityIndicator()
+            }
+        }).disposed(by: disposeBag)
     }
     
     func setupMovieColors() {
