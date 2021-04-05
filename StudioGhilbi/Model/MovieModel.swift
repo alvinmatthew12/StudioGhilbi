@@ -43,7 +43,6 @@ class MovieModel {
             let task = URLSession.shared.dataTask(with: urlRequest) { (data, res, error) in
                 do {
                     if error != nil {
-                        print(error)
                         observer.onError(error!)
                     } else {
                         let jsonData = try JSONDecoder().decode(Movie.self, from: data ?? Data())
